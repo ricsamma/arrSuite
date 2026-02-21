@@ -72,18 +72,6 @@ Stack de contenedores para ecosistema *arr* con red interna fija.
 	- `/data/downloads`
 	- `/data/media/music`
 
-### Readarr
-
-- Contenedor: `readarr-samma`
-- Imagen: `lscr.io/linuxserver/readarr:develop`
-- Puerto: `8787`
-- IP interna: `10.10.0.18`
-- Función: gestión y automatización de libros.
-- Volúmenes relevantes:
-	- `/config`
-	- `/data/downloads`
-	- `/data/media/books`
-
 ### Jellyfin
 
 - Contenedor: `jellyfin-samma`
@@ -135,7 +123,7 @@ Stack de contenedores para ecosistema *arr* con red interna fija.
 ### 1) Download clients
 
 - En `qBittorrent` y `NZBGet`, confirma que la ruta de descarga activa sea: `/data/downloads`.
-- En Sonarr/Radarr/Lidarr/Readarr, agrega el download client por IP interna:
+- En Sonarr/Radarr/Lidarr, agrega el download client por IP interna:
 	- qBittorrent: `10.10.0.13:9865`
 	- NZBGet: `10.10.0.17:6789`
 
@@ -144,7 +132,6 @@ Stack de contenedores para ecosistema *arr* con red interna fija.
 - Sonarr: `/data/media/series`
 - Radarr: `/data/media/movies`
 - Lidarr: `/data/media/music`
-- Readarr: `/data/media/books`
 
 ### 3) Verificación rápida
 
@@ -165,7 +152,6 @@ docker compose up -d
 - Prowlarr: `http://localhost:9696`
 - qBittorrent: `http://localhost:9865`
 - Lidarr: `http://localhost:8686`
-- Readarr: `http://localhost:8787`
 - Jellyfin: `http://localhost:8096`
 - Jellyseerr: `http://localhost:5055`
 - NZBGet: `http://localhost:6789`

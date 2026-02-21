@@ -146,8 +146,13 @@ services:
     volumes:
       - /volume1/docker/nzbget/config:/config:rw
       - /volume1/media/downloads:/data/downloads:rw
+      - ./scripts/nzbget-apply-secrets.sh:/usr/local/bin/nzbget-apply-secrets.sh:ro
+      - /volume1/docker/secrets/nzbget.env:/run/secrets/nzbget.env:ro
     ports:
       - "6789:6789"
+    entrypoint:
+      - /bin/sh
+      - /usr/local/bin/nzbget-apply-secrets.sh
     restart: unless-stopped
     networks:
       arr-network:

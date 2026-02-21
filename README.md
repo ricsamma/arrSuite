@@ -117,6 +117,13 @@ Stack de contenedores para ecosistema *arr* con red interna fija.
 		- `NzbDir`: `${MainDir}/nzb`
 		- `QueueDir`: `${MainDir}/queue`
 	- Crea esas carpetas en el host dentro de `/volume1/media/downloads` y reinicia el contenedor.
+- Credenciales desde Vault (archivo secreto):
+	- El stack monta el secreto desde `/volume1/docker/secrets/nzbget.env`.
+	- Formato esperado del archivo:
+		- `NZBGET_USERNAME=...`
+		- `NZBGET_PASSWORD=...`
+	- Hay una plantilla en [secrets/nzbget.env.example](secrets/nzbget.env.example).
+	- En cada arranque, el script [scripts/nzbget-apply-secrets.sh](scripts/nzbget-apply-secrets.sh) aplica esos valores a `ControlUsername` y `ControlPassword` en `nzbget.conf`.
 
 ### Soulseek (slskd)
 

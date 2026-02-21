@@ -98,6 +98,8 @@ services:
   readarr:
     image: lscr.io/linuxserver/readarr:develop
     container_name: readarr-samma
+    profiles:
+      - readarr
     depends_on:
       - prowlarr
     environment:

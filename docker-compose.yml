@@ -191,6 +191,8 @@ services:
       - SLSKD_USERNAME=ricsamma
       - SLSKD_PASSWORD=holahola
       - SLSKD_REMOTE_CONFIGURATION=true
+      - SLSKD_DOWNLOADS_DIR=/data/downloads
+      - SLSKD_INCOMPLETE_DIR=/data/downloads/incomplete
     volumes:
       - /volume1/docker/soulseek/config:/app:rw
       - /volume1/media/downloads:/data/downloads:rw

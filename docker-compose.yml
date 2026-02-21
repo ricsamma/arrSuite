@@ -175,8 +175,8 @@ services:
 
   soularr:
     image: mrusse08/soularr:latest
-    container_name: soularr
-    hostname: soularr
+    container_name: soularr-samma
+    hostname: soularr-samma
     user: 1000:10
     environment:
       - TZ=America/Santiago

@@ -178,6 +178,45 @@ Stack de contenedores para ecosistema *arr* con red interna fija.
 - Si el test pide `Remote Path Mapping`, revisa que todas las rutas usen exactamente el mismo prefijo `/data/...`.
 - Ejecuta una descarga de prueba y valida que haya import automático sin copia duplicada.
 
+## Port forwarding en router local
+
+Configura reglas NAT/Port Forwarding apuntando a la IP LAN del NAS (host Docker), usando el mismo puerto externo e interno salvo que necesites remapeo.
+
+### Puertos que NO deberías abrir a Internet (solo LAN/VPN)
+
+- Sonarr: `8989/TCP`
+- Radarr: `7878/TCP`
+- Prowlarr: `9696/TCP`
+- qBittorrent WebUI: `9865/TCP`
+- Lidarr: `8686/TCP`
+- Jellyfin UI: `8096/TCP` (HTTP) y `8920/TCP` (HTTPS, opcional)
+- Jellyseerr: `5055/TCP`
+- NZBGet: `6789/TCP`
+- Soulseek WebUI: `5030/TCP`
+- aMule WebUI: `4711/TCP`
+- Soularr: no expone puertos
+
+### Puertos que SÍ conviene abrir (si buscas conectividad entrante)
+
+- qBittorrent: `6881/TCP` y `6881/UDP`
+- Soulseek (slskd): `50300/TCP` y `50300/UDP`
+- aMule (eD2k/Kad): `4662/TCP` y `4672/UDP`
+
+### Resumen rápido de reglas NAT recomendadas
+
+- `6881/TCP` -> `IP_NAS:6881`
+- `6881/UDP` -> `IP_NAS:6881`
+- `50300/TCP` -> `IP_NAS:50300`
+- `50300/UDP` -> `IP_NAS:50300`
+- `4662/TCP` -> `IP_NAS:4662`
+- `4672/UDP` -> `IP_NAS:4672`
+
+### Recomendación de seguridad
+
+- Para administración (UIs/APIs), evita abrir puertos a Internet.
+- Usa VPN o reverse proxy con autenticación fuerte para acceso remoto.
+- Abre en WAN solo los puertos P2P necesarios (`6881`, `50300`, `4662`, `4672`) si necesitas conectividad entrante óptima.
+
 ## Arranque del stack
 
 ```bash

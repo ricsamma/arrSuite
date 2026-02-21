@@ -180,6 +180,10 @@ services:
       - ricsamma
       - --slsk-password
       - holahola
+      - --downloads
+      - /data/downloads
+      - --incomplete
+      - /data/downloads/incomplete
     environment:
       - PUID=1000
       - PGID=10

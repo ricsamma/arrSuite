@@ -159,24 +159,77 @@ Stack de contenedores para ecosistema *arr* con red interna fija.
 
 ## Checklist de configuración en las apps
 
-### 1) Download clients
+### 1) Sonarr
 
-- En `qBittorrent` y `NZBGet`, confirma que la ruta de descarga activa sea: `/data/downloads`.
-- En Sonarr/Radarr/Lidarr, agrega el download client por IP interna:
+- Root folder: `/data/media/series`
+- Download clients:
 	- qBittorrent: `10.10.0.13:9865`
 	- NZBGet: `10.10.0.17:6789`
 
-### 2) Root folders
+### 2) Radarr
 
-- Sonarr: `/data/media/series`
-- Radarr: `/data/media/movies`
-- Lidarr: `/data/media/music`
+- Root folder: `/data/media/movies`
+- Download clients:
+	- qBittorrent: `10.10.0.13:9865`
+	- NZBGet: `10.10.0.17:6789`
 
-### 3) Verificación rápida
+### 3) Lidarr
 
-- En cada app *arr*, usa botón `Test` del download client.
-- Si el test pide `Remote Path Mapping`, revisa que todas las rutas usen exactamente el mismo prefijo `/data/...`.
-- Ejecuta una descarga de prueba y valida que haya import automático sin copia duplicada.
+- Root folder: `/data/media/music`
+- Download clients:
+	- qBittorrent: `10.10.0.13:9865`
+	- NZBGet: `10.10.0.17:6789`
+
+### 4) Prowlarr
+
+- Agrega y prueba indexers.
+- Sincroniza aplicaciones conectadas: Sonarr, Radarr y Lidarr.
+
+### 5) qBittorrent
+
+- Verifica WebUI en `9865`.
+- Confirma directorio de descargas en `/data/downloads`.
+- Comprueba puerto de escucha BitTorrent `6881` (TCP/UDP).
+
+### 6) NZBGet
+
+- Define `MainDir=/data/downloads` en `Settings > Paths`.
+- Verifica subcarpetas bajo `${MainDir}` (`completed`, `intermediate`, `nzb`, `queue`).
+
+### 7) Jellyfin
+
+- Crea bibliotecas apuntando a:
+	- `/data/media/movies`
+	- `/data/media/series`
+	- `/data/media/music`
+
+### 8) Jellyseerr
+
+- Conecta Jellyfin (`10.10.0.15:8096`).
+- Conecta Sonarr (`10.10.0.10:8989`) y Radarr (`10.10.0.11:7878`).
+
+### 9) Soulseek (slskd)
+
+- Configura cuenta Soulseek.
+- Verifica rutas de descarga y biblioteca compartida.
+- Comprueba conectividad entrante en puerto `50300` (TCP/UDP) si usas forwarding.
+
+### 10) Soularr
+
+- Verifica que use `/downloads` y `/data`.
+- Ajusta `SCRIPT_INTERVAL` según frecuencia deseada.
+
+### 11) aMule
+
+- WebUI en `4711`.
+- Configura carpeta de descargas en `/downloads`.
+- Verifica conectividad de red eD2k/Kad (`4662/TCP` y `4672/UDP`).
+
+### 12) Verificación general rápida
+
+- Si alguna app *arr* pide `Remote Path Mapping`, revisa que rutas compartidas usen el mismo prefijo.
+- Haz una descarga de prueba por cada protocolo principal (BitTorrent, Usenet, Soulseek, eD2k).
+- Confirma import automático en Sonarr/Radarr/Lidarr sin copias duplicadas.
 
 ## Port forwarding en router local
 

@@ -174,10 +174,15 @@ services:
   soulseek:
     image: slskd/slskd:latest
     container_name: soulseek-samma
+    command:
+      - --remote-configuration
     environment:
       - PUID=1000
       - PGID=10
       - TZ=America/Santiago
+      - SLSKD_USERNAME=slskd
+      - SLSKD_PASSWORD=holahola
+      - SLSKD_REMOTE_CONFIGURATION=true
     volumes:
       - /volume1/docker/soulseek/config:/app:rw
       - /volume1/media/downloads:/data/downloads:rw

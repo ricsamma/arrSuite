@@ -132,6 +132,31 @@ Stack de contenedores para ecosistema *arr* con red interna fija.
 	- `/data/downloads`
 	- `/data/media/music`
 
+### Soularr
+
+- Contenedor: `soularr-samma`
+- Imagen: `mrusse08/soularr:latest`
+- Puerto: no expone Web UI (servicio de automatización en segundo plano)
+- IP interna: `10.10.0.19`
+- Función: automatización sobre descargas de Soulseek.
+- Volúmenes relevantes:
+	- `/downloads`
+	- `/data`
+
+### aMule
+
+- Contenedor: `amule-samma`
+- Imagen: `lscr.io/linuxserver/amule:latest`
+- Puertos:
+	- Web UI: `4711`
+	- eD2k TCP: `4662`
+	- Kad UDP: `4672`
+- IP interna: `10.10.0.20`
+- Función: cliente eD2k/Kad para búsqueda/descarga de contenido en esa red.
+- Volúmenes relevantes:
+	- `/config`
+	- `/downloads`
+
 ## Checklist de configuración en las apps
 
 ### 1) Download clients
@@ -170,3 +195,4 @@ docker compose up -d
 - Jellyseerr: `http://localhost:5055`
 - NZBGet: `http://localhost:6789`
 - Soulseek (slskd): `http://localhost:5030`
+- aMule: `http://localhost:4711`

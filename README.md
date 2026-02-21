@@ -146,7 +146,7 @@ Stack de contenedores para ecosistema *arr* con red interna fija.
 ### aMule
 
 - Contenedor: `amule-samma`
-- Imagen: `lscr.io/linuxserver/amule:latest`
+- Imagen: `ngosang/amule:latest`
 - Puertos:
 	- Web UI: `4711`
 	- eD2k TCP: `4662`

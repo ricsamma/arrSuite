@@ -190,7 +190,7 @@ services:
         ipv4_address: 10.10.0.19
 
   amule:
-    image: lscr.io/linuxserver/amule:latest
+    image: ngosang/amule:latest
     container_name: amule-samma
     environment:
       - PUID=1000

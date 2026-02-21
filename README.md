@@ -108,6 +108,15 @@ Stack de contenedores para ecosistema *arr* con red interna fija.
 - Volúmenes relevantes:
 	- `/config`
 	- `/data/downloads`
+- Solución de error común:
+	- Si aparece `"/downloads/completed" directory does not exist`, NZBGet está usando una ruta antigua.
+	- En `Settings > Paths`, define `MainDir` como `/data/downloads`.
+	- Ajusta subcarpetas bajo `MainDir` (ejemplo):
+		- `DestDir`: `${MainDir}/completed`
+		- `InterDir`: `${MainDir}/intermediate`
+		- `NzbDir`: `${MainDir}/nzb`
+		- `QueueDir`: `${MainDir}/queue`
+	- Crea esas carpetas en el host dentro de `/volume1/media/downloads` y reinicia el contenedor.
 
 ## Checklist de configuración en las apps
 

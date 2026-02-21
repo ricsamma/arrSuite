@@ -95,6 +95,26 @@ services:
       arr-network:
         ipv4_address: 10.10.0.14
 
+  readarr:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr-samma
+    depends_on:
+      - prowlarr
+    environment:
+      - PUID=1000
+      - PGID=10
+      - TZ=America/Santiago
+    volumes:
+      - /volume1/docker/readarr/config:/config:rw
+      - /volume1/media/downloads:/data/downloads:rw
+      - /volume1/media/books:/data/media/books:rw
+    ports:
+      - "8787:8787"
+    restart: unless-stopped
+    networks:
+      arr-network:
+        ipv4_address: 10.10.0.18
+
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin-samma

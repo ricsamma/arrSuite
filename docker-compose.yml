@@ -215,6 +215,8 @@ services:
       - PGID=10
       - TZ=America/Santiago
       - WEBUI_PORT=4711
+      - WEBUI_PWD=holahola
+      - GUI_PWD=holahola
     volumes:
       - /volume1/docker/amule/config:/config:rw
       - /volume1/media/downloads:/downloads:rw

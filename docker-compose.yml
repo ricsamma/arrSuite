@@ -1,0 +1,160 @@
+services:
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr-samma
+    depends_on:
+      - prowlarr
+    environment:
+      - PUID=1000
+      - PGID=10
+      - TZ=America/Santiago
+    volumes:
+      - ${CONFIG_ROOT:-./config}/sonarr:/config
+      - ${MEDIA_ROOT:-./media}/tv:/tv
+      - ${DOWNLOADS_ROOT:-./downloads}:/downloads
+    ports:
+      - "8989:8989"
+    restart: unless-stopped
+    networks:
+      arr-network:
+        ipv4_address: 10.10.0.10
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr-samma
+    depends_on:
+      - prowlarr
+    environment:
+      - PUID=1000
+      - PGID=10
+      - TZ=America/Santiago
+    volumes:
+      - ${CONFIG_ROOT:-./config}/radarr:/config
+      - ${MEDIA_ROOT:-./media}/movies:/movies
+      - ${DOWNLOADS_ROOT:-./downloads}:/downloads
+    ports:
+      - "7878:7878"
+    restart: unless-stopped
+    networks:
+      arr-network:
+        ipv4_address: 10.10.0.11
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr-samma
+    environment:
+      - PUID=1000
+      - PGID=10
+      - TZ=America/Santiago
+    volumes:
+      - ${CONFIG_ROOT:-./config}/prowlarr:/config
+    ports:
+      - "9696:9696"
+    restart: unless-stopped
+    networks:
+      arr-network:
+        ipv4_address: 10.10.0.12
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent-samma
+    environment:
+      - PUID=1000
+      - PGID=10
+      - TZ=America/Santiago
+      - WEBUI_PORT=8080
+    volumes:
+      - ${CONFIG_ROOT:-./config}/qbittorrent:/config
+      - ${DOWNLOADS_ROOT:-./downloads}:/downloads
+    ports:
+      - "8080:8080"
+      - "6881:6881"
+      - "6881:6881/udp"
+    restart: unless-stopped
+    networks:
+      arr-network:
+        ipv4_address: 10.10.0.13
+
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr-samma
+    depends_on:
+      - prowlarr
+    environment:
+      - PUID=1000
+      - PGID=10
+      - TZ=America/Santiago
+    volumes:
+      - ${CONFIG_ROOT:-./config}/lidarr:/config
+      - ${MEDIA_ROOT:-./media}/music:/music
+      - ${DOWNLOADS_ROOT:-./downloads}:/downloads
+    ports:
+      - "8686:8686"
+    restart: unless-stopped
+    networks:
+      arr-network:
+        ipv4_address: 10.10.0.14
+
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin-samma
+    environment:
+      - PUID=1000
+      - PGID=10
+      - TZ=America/Santiago
+    volumes:
+      - ${CONFIG_ROOT:-./config}/jellyfin:/config
+      - ${CONFIG_ROOT:-./config}/jellyfin-cache:/cache
+      - ${MEDIA_ROOT:-./media}:/media
+    ports:
+      - "8096:8096"
+      - "8920:8920"
+    restart: unless-stopped
+    networks:
+      arr-network:
+        ipv4_address: 10.10.0.15
+
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr-samma
+    depends_on:
+      - jellyfin
+      - sonarr
+      - radarr
+    environment:
+      - PUID=1000
+      - PGID=10
+      - TZ=America/Santiago
+    volumes:
+      - ${CONFIG_ROOT:-./config}/jellyseerr:/app/config
+    ports:
+      - "5055:5055"
+    restart: unless-stopped
+    networks:
+      arr-network:
+        ipv4_address: 10.10.0.16
+
+  nzbget:
+    image: lscr.io/linuxserver/nzbget:latest
+    container_name: nzbget-samma
+    environment:
+      - PUID=1000
+      - PGID=10
+      - TZ=America/Santiago
+    volumes:
+      - ${CONFIG_ROOT:-./config}/nzbget:/config
+      - ${DOWNLOADS_ROOT:-./downloads}:/downloads
+    ports:
+      - "6789:6789"
+    restart: unless-stopped
+    networks:
+      arr-network:
+        ipv4_address: 10.10.0.17
+
+networks:
+  arr-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.0.0/24
+          gateway: 10.10.0.1

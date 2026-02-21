@@ -173,6 +173,22 @@ services:
       arr-network:
         ipv4_address: 10.10.0.18
 
+  soularr:
+    image: mrusse08/soularr:latest
+    container_name: soularr
+    hostname: soularr
+    user: 1000:10
+    environment:
+      - TZ=America/Santiago
+      - SCRIPT_INTERVAL=300
+    volumes:
+      - /volume1/media/downloads:/downloads
+      - /volume1/docker/soularr/config:/data
+    restart: unless-stopped
+    networks:
+      arr-network:
+        ipv4_address: 10.10.0.19
+
 networks:
   arr-network:
     driver: bridge

@@ -136,6 +136,24 @@ services:
       arr-network:
         ipv4_address: 10.10.0.16
 
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr-samma
+    environment:
+      - PUID=1000
+      - PGID=10
+      - TZ=America/Santiago
+    volumes:
+      - /volume1/docker/bazarr/config:/config:rw
+      - /volume1/media/series:/data/media/series:rw
+      - /volume1/media/movies:/data/media/movies:rw
+    ports:
+      - "6767:6767"
+    restart: unless-stopped
+    networks:
+      arr-network:
+        ipv4_address: 10.10.0.21
+
   nzbget:
     image: lscr.io/linuxserver/nzbget:latest
     container_name: nzbget-samma

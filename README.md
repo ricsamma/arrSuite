@@ -98,6 +98,18 @@ Stack de contenedores para ecosistema *arr* con red interna fija.
 - Volumen relevante:
 	- `/app/config`
 
+### Bazarr
+
+- Contenedor: `bazarr-samma`
+- Imagen: `lscr.io/linuxserver/bazarr:latest`
+- Puerto: `6767`
+- IP interna: `10.10.0.21`
+- Función: búsqueda y descarga automática de subtítulos para series y películas.
+- Volúmenes relevantes:
+	- `/config`
+	- `/data/media/series`
+	- `/data/media/movies`
+
 ### NZBGet
 
 - Contenedor: `nzbget-samma`
@@ -208,24 +220,32 @@ Stack de contenedores para ecosistema *arr* con red interna fija.
 - Conecta Jellyfin (`10.10.0.15:8096`).
 - Conecta Sonarr (`10.10.0.10:8989`) y Radarr (`10.10.0.11:7878`).
 
-### 9) Soulseek (slskd)
+### 9) Bazarr
+
+- Conecta Sonarr (`10.10.0.10:8989`) y Radarr (`10.10.0.11:7878`) con sus API keys.
+- Configura idiomas preferidos de subtítulos (ej. `es`, `es-419`) y fallback.
+- Verifica rutas de medios:
+	- series: `/data/media/series`
+	- películas: `/data/media/movies`
+
+### 10) Soulseek (slskd)
 
 - Configura cuenta Soulseek.
 - Verifica rutas de descarga y biblioteca compartida.
 - Comprueba conectividad entrante en puerto `50300` (TCP/UDP) si usas forwarding.
 
-### 10) Soularr
+### 11) Soularr
 
 - Verifica que use `/downloads` y `/data`.
 - Ajusta `SCRIPT_INTERVAL` según frecuencia deseada.
 
-### 11) aMule
+### 12) aMule
 
 - WebUI en `4711`.
 - Configura carpeta de descargas en `/downloads`.
 - Verifica conectividad de red eD2k/Kad (`4662/TCP` y `4672/UDP`).
 
-### 12) Verificación general rápida
+### 13) Verificación general rápida
 
 - Si alguna app *arr* pide `Remote Path Mapping`, revisa que rutas compartidas usen el mismo prefijo.
 - Haz una descarga de prueba por cada protocolo principal (BitTorrent, Usenet, Soulseek, eD2k).
@@ -244,6 +264,7 @@ Configura reglas NAT/Port Forwarding apuntando a la IP LAN del NAS (host Docker)
 - Lidarr: `8686/TCP`
 - Jellyfin UI: `8096/TCP` (HTTP) y `8920/TCP` (HTTPS, opcional)
 - Jellyseerr: `5055/TCP`
+- Bazarr: `6767/TCP`
 - NZBGet: `6789/TCP`
 - Soulseek WebUI: `5030/TCP`
 - aMule WebUI: `4711/TCP`
@@ -285,6 +306,7 @@ docker compose up -d
 - Lidarr: `http://localhost:8686`
 - Jellyfin: `http://localhost:8096`
 - Jellyseerr: `http://localhost:5055`
+- Bazarr: `http://localhost:6767`
 - NZBGet: `http://localhost:6789`
 - Soulseek (slskd): `http://localhost:5030`
 - aMule: `http://localhost:4711`

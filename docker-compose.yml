@@ -153,6 +153,26 @@ services:
       arr-network:
         ipv4_address: 10.10.0.17
 
+  soulseek:
+    image: slskd/slskd:latest
+    container_name: soulseek-samma
+    environment:
+      - PUID=1000
+      - PGID=10
+      - TZ=America/Santiago
+    volumes:
+      - /volume1/docker/soulseek/config:/app:rw
+      - /volume1/media/downloads:/data/downloads:rw
+      - /volume1/media/audio/musica:/data/media/music:rw
+    ports:
+      - "5030:5030"
+      - "50300:50300"
+      - "50300:50300/udp"
+    restart: unless-stopped
+    networks:
+      arr-network:
+        ipv4_address: 10.10.0.18
+
 networks:
   arr-network:
     driver: bridge

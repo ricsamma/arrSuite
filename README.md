@@ -118,6 +118,20 @@ Stack de contenedores para ecosistema *arr* con red interna fija.
 		- `QueueDir`: `${MainDir}/queue`
 	- Crea esas carpetas en el host dentro de `/volume1/media/downloads` y reinicia el contenedor.
 
+### Soulseek (slskd)
+
+- Contenedor: `soulseek-samma`
+- Imagen: `slskd/slskd:latest`
+- Puertos:
+	- Web UI: `5030`
+	- Soulseek TCP/UDP: `50300`
+- IP interna: `10.10.0.18`
+- Función: cliente Soulseek para descubrimiento/descarga de música en red P2P.
+- Volúmenes relevantes:
+	- `/app` (configuración)
+	- `/data/downloads`
+	- `/data/media/music`
+
 ## Checklist de configuración en las apps
 
 ### 1) Download clients
@@ -155,3 +169,4 @@ docker compose up -d
 - Jellyfin: `http://localhost:8096`
 - Jellyseerr: `http://localhost:5055`
 - NZBGet: `http://localhost:6789`
+- Soulseek (slskd): `http://localhost:5030`

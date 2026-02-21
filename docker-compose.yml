@@ -176,6 +176,10 @@ services:
     container_name: soulseek-samma
     command:
       - --remote-configuration
+      - --slsk-username
+      - ricsamma
+      - --slsk-password
+      - holahola
     environment:
       - PUID=1000
       - PGID=10

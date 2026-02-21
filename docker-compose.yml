@@ -9,9 +9,9 @@ services:
       - PGID=10
       - TZ=America/Santiago
     volumes:
-      - ${CONFIG_ROOT:-./config}/sonarr:/config
-      - ${MEDIA_ROOT:-./media}/tv:/tv
-      - ${DOWNLOADS_ROOT:-./downloads}:/downloads
+      - /volume1/docker/sonarr/config:/config:rw
+      - /volume1/media/downloads:/data/downloads:rw
+      - /volume1/media/series:/data/media/series:rw
     ports:
       - "8989:8989"
     restart: unless-stopped
@@ -29,9 +29,9 @@ services:
       - PGID=10
       - TZ=America/Santiago
     volumes:
-      - ${CONFIG_ROOT:-./config}/radarr:/config
-      - ${MEDIA_ROOT:-./media}/movies:/movies
-      - ${DOWNLOADS_ROOT:-./downloads}:/downloads
+      - /volume1/docker/radarr/config:/config:rw
+      - /volume1/media/downloads:/data/downloads:rw
+      - /volume1/media/movies:/data/media/movies:rw
     ports:
       - "7878:7878"
     restart: unless-stopped
@@ -47,7 +47,7 @@ services:
       - PGID=10
       - TZ=America/Santiago
     volumes:
-      - ${CONFIG_ROOT:-./config}/prowlarr:/config
+      - /volume1/docker/prowlarr/config:/config:rw
     ports:
       - "9696:9696"
     restart: unless-stopped
@@ -62,12 +62,12 @@ services:
       - PUID=1000
       - PGID=10
       - TZ=America/Santiago
-      - WEBUI_PORT=8080
+      - WEBUI_PORT=9865
     volumes:
-      - ${CONFIG_ROOT:-./config}/qbittorrent:/config
-      - ${DOWNLOADS_ROOT:-./downloads}:/downloads
+      - /volume1/docker/qbittorrent/config:/config:rw
+      - /volume1/media/downloads:/data/downloads:rw
     ports:
-      - "8080:8080"
+      - "9865:9865"
       - "6881:6881"
       - "6881:6881/udp"
     restart: unless-stopped
@@ -85,9 +85,9 @@ services:
       - PGID=10
       - TZ=America/Santiago
     volumes:
-      - ${CONFIG_ROOT:-./config}/lidarr:/config
-      - ${MEDIA_ROOT:-./media}/music:/music
-      - ${DOWNLOADS_ROOT:-./downloads}:/downloads
+      - /volume1/docker/lidarr/config:/config:rw
+      - /volume1/media/downloads:/data/downloads:rw
+      - /volume1/media/audio/musica:/data/media/music:rw
     ports:
       - "8686:8686"
     restart: unless-stopped
@@ -103,9 +103,11 @@ services:
       - PGID=10
       - TZ=America/Santiago
     volumes:
-      - ${CONFIG_ROOT:-./config}/jellyfin:/config
-      - ${CONFIG_ROOT:-./config}/jellyfin-cache:/cache
-      - ${MEDIA_ROOT:-./media}:/media
+      - /volume1/docker/jellyfin/config:/config:rw
+      - /volume1/docker/jellyfin/cache:/cache:rw
+      - /volume1/media/movies:/data/media/movies:ro
+      - /volume1/media/series:/data/media/series:ro
+      - /volume1/media/audio/musica:/data/media/music:ro
     ports:
       - "8096:8096"
       - "8920:8920"
@@ -126,7 +128,7 @@ services:
       - PGID=10
       - TZ=America/Santiago
     volumes:
-      - ${CONFIG_ROOT:-./config}/jellyseerr:/app/config
+      - /volume1/docker/jellyseerr/config:/app/config:rw
     ports:
       - "5055:5055"
     restart: unless-stopped
@@ -142,8 +144,8 @@ services:
       - PGID=10
       - TZ=America/Santiago
     volumes:
-      - ${CONFIG_ROOT:-./config}/nzbget:/config
-      - ${DOWNLOADS_ROOT:-./downloads}:/downloads
+      - /volume1/docker/nzbget/config:/config:rw
+      - /volume1/media/downloads:/data/downloads:rw
     ports:
       - "6789:6789"
     restart: unless-stopped

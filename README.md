@@ -238,6 +238,14 @@ Stack de contenedores para ecosistema *arr* con red interna fija.
 
 - Verifica que use `/downloads` y `/data`.
 - Ajusta `SCRIPT_INTERVAL` según frecuencia deseada.
+- Crea el archivo `config.ini` en `/volume1/docker/soularr/config/config.ini` usando como base `scripts/soularr/config.ini.example`.
+- En `config.ini` define:
+	- `[Lidarr] host_url = http://10.10.0.14:8686`
+	- `[Lidarr] download_dir = /data/downloads`
+	- `[Slskd] host_url = http://10.10.0.18:5030`
+	- `[Slskd] download_dir = /downloads`
+	- API keys reales de Lidarr y slskd.
+- Reinicia `soularr-samma` después de guardar el archivo y valida en logs que no existan errores de conexión/API key.
 
 ### 12) aMule
 

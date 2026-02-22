@@ -190,6 +190,7 @@ services:
       - TZ=America/Santiago
       - SLSKD_USERNAME=ricsamma
       - SLSKD_PASSWORD=holahola
+      - SLSKD_API_KEY=soularr-3Nf8Qp2Lx7Vm4Kd9Tz1Rw6Hy
       - SLSKD_REMOTE_CONFIGURATION=true
       - SLSKD_DOWNLOADS_DIR=/data/downloads/completed/Music
       - SLSKD_INCOMPLETE_DIR=/data/downloads/incomplete
@@ -210,6 +211,9 @@ services:
     image: mrusse08/soularr:latest
     container_name: soularr-samma
     hostname: soularr-samma
+    depends_on:
+      - lidarr
+      - soulseek
     user: 1000:10
     environment:
       - TZ=America/Santiago

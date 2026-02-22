@@ -1,14 +1,14 @@
 [Lidarr]
-api_key = CHANGE_ME_LIDARR_API_KEY
+api_key = f7fe9e1f40254091b17fcf85046cb321
 host_url = http://10.10.0.14:8686
-download_dir = /data/downloads
+download_dir = /data/downloads/completed/Music
 disable_sync = False
 
 [Slskd]
 api_key = soularr-3Nf8Qp2Lx7Vm4Kd9Tz1Rw6Hy
 host_url = http://10.10.0.18:5030
 url_base = /
-download_dir = /downloads
+download_dir = /downloads/completed/Music
 delete_searches = False
 stalled_timeout = 3600
 

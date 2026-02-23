@@ -7,14 +7,12 @@ services:
     volumes:
       - /volume1/docker/network-samma/nginx-proxy-manager/data:/data:rw
       - /volume1/docker/network-samma/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
-    ports:
-      - "80:80"
-      - "81:81"
-      - "443:443"
     restart: unless-stopped
     networks:
       network-suite:
         ipv4_address: 10.20.0.10
+      npm-lan-macvlan:
+        ipv4_address: 192.168.1.80
 
   pihole:
     image: pihole/pihole:latest
@@ -78,3 +76,12 @@ networks:
       config:
         - subnet: 10.20.0.0/24
           gateway: 10.20.0.1
+
+  npm-lan-macvlan:
+    driver: macvlan
+    driver_opts:
+      parent: ${NPM_MACVLAN_PARENT:-eth0}
+    ipam:
+      config:
+        - subnet: 192.168.1.0/24
+          gateway: 192.168.1.1

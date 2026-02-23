@@ -305,6 +305,17 @@ Configura reglas NAT/Port Forwarding apuntando a la IP LAN del NAS (host Docker)
 docker compose up -d
 ```
 
+## Stack de red (`network-compose.yml`)
+
+- El stack de red usa `TS_AUTHKEY` desde archivo `.env` (no hardcodeado en el compose).
+- Crea/copía `.env` desde `.env.example` y define tu key:
+	- `TS_AUTHKEY=tskey-auth-...`
+- Levante recomendado:
+	- `docker compose -f network-compose.yml up -d`
+- Seguridad:
+	- `.env` está ignorado por git; no subas claves reales al repositorio.
+	- Si una key ya fue publicada antes, rótala en Tailscale y usa la nueva.
+
 ## Acceso rápido (host local)
 
 - Sonarr: `http://localhost:8989`

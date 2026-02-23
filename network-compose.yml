@@ -1,0 +1,80 @@
+services:
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager-samma
+    environment:
+      - TZ=America/Santiago
+    volumes:
+      - /volume1/docker/network-samma/nginx-proxy-manager/data:/data:rw
+      - /volume1/docker/network-samma/nginx-proxy-manager/letsencrypt:/etc/letsencrypt:rw
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    restart: unless-stopped
+    networks:
+      network-suite:
+        ipv4_address: 10.20.0.10
+
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole-samma
+    environment:
+      - TZ=America/Santiago
+      - WEBPASSWORD=holahola
+      - PIHOLE_DNS_=10.20.0.11#5335;1.1.1.1;1.0.0.1
+      - DNSMASQ_LISTENING=all
+    volumes:
+      - /volume1/docker/network-samma/pihole/etc-pihole:/etc/pihole:rw
+      - /volume1/docker/network-samma/pihole/etc-dnsmasq.d:/etc/dnsmasq.d:rw
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8080:80/tcp"
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+    networks:
+      network-suite:
+        ipv4_address: 10.20.0.12
+
+  unbound:
+    image: mvance/unbound:latest
+    container_name: unbound-samma
+    volumes:
+      - /volume1/docker/network-samma/unbound:/opt/unbound/etc/unbound:rw
+    ports:
+      - "5335:53/tcp"
+      - "5335:53/udp"
+    restart: unless-stopped
+    networks:
+      network-suite:
+        ipv4_address: 10.20.0.11
+
+  tailscale:
+    image: tailscale/tailscale:latest
+    container_name: tailscale-samma
+    hostname: tailscale-samma
+    environment:
+      - TS_AUTHKEY=${TS_AUTHKEY}
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_EXTRA_ARGS=--accept-routes=true --accept-dns=true
+      - TZ=America/Santiago
+    volumes:
+      - /volume1/docker/network-samma/tailscale/state:/var/lib/tailscale:rw
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    restart: unless-stopped
+    networks:
+      network-suite:
+        ipv4_address: 10.20.0.13
+
+networks:
+  network-suite:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.20.0.0/24
+          gateway: 10.20.0.1
